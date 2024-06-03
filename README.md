@@ -456,7 +456,7 @@ user@svr:/var/www/v14$ sudo apt install ufw -y
 user@svr:/var/www/v14$ sudo ufw enable # DO NOT DISCONNECT UNTIL YOU ALLOW PORT 22
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-user@svr:/var/www/v14$ sudo ufw allow 22,80,12322,12321,12309/tcp # ssh, http, mus, server, rcon
+user@svr:/var/www/v14$ sudo ufw allow 22,80,12322,12321/tcp # ssh, http, mus, server, rcon
 ```
 
 Check the `status` of `ufw`
@@ -466,8 +466,8 @@ Status: active
 
 To                         Action      From
 --                         ------      ----
-22,80,12309,12321,12322/tcp ALLOW       Anywhere
-22,80,12309,12321,12322/tcp (v6) ALLOW       Anywhere (v6)
+22,80,12321,12322/tcp ALLOW       Anywhere
+22,80,12321,12322/tcp (v6) ALLOW       Anywhere (v6)
 ```
 
 #### Edit `server` and `loader` with remote host info
