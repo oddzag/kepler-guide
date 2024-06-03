@@ -27,7 +27,7 @@ root@svr:~$ su - user             # replace 'user' with your name
  Now install the dependencies and create your server's root directory. We'll be using `/opt/server`.
 
  ```sh
-user@svr:~$ sudo apt install unzip mariadb-server default-jdk nginx php -y
+user@svr:~$ sudo apt install unzip mariadb-server default-jdk nginx php-fm -y
 user@svr:~$ mkdir /opt/server
 ```
 
@@ -311,14 +311,13 @@ Start by deleting the `default` config. [Here's a copy](https://github.com/oddza
 root@svr:/var/www/v14$ sudo rm -R /etc/nginx/sites-availale/default 
 ```
 
-Now install `php` and check the version
+Find your `php` version
 ```sh
-root@svr:/var/www/v14$ sudo apt install php-fpm -y
 root@svr:/var/www/v14$ ls /etc/php
 8.2
 ```
 
-As you can see, I installed 8.2. Now, re-create the `default` config file to establish the server block. As you can see in the `fastcgi_pass` directive, I've set `8.2` as my version. 
+As you can see, I installed 8.2. Now, re-create the `default` config file to establish the server block. Set your `php` version in the `fastcgi_pass` directive. 
 ```sh
 root@svr:/var/www/v14$ sudo nano /etc/nginx/sites-available/default # recreate a blank copy
 ```
