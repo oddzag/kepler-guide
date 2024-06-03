@@ -1,6 +1,6 @@
 # How to install and configure Kepler
 
-This guide assumes a fresh install of `debian`, running everything on `localhost`. It is intentionally over-simplified and verbose.
+This guide details how to install and configure [Quackster's Kepler](https://github.com/Quackster/Kepler). It assumes a fresh install of `debian`, running everything on `localhost` and is intentionally over-simplified and verbose.
 
 If you're setting this up on a remote host, make sure you read [Remote host setup](#remote-host-setup). 
 
