@@ -343,7 +343,7 @@ server {
 
 (To save your changes in `nano`, use `Ctrl` `O`, then `enter` on the default file name, then `Ctrl` `X`)
 
-Finally, restart `nginx`. If you get `[emerg] 3174#3174: "fastcgi_pass" directive is duplicate in /etc/nginx/sites-enabled/default:21`, make sure you only have 1 `fastcgi_pass` directive in the server block.
+Finally, restart `nginx` and test your config.
 
 ```sh
 root@svr:/var/www/v14$ sudo systemctl restart nginx
@@ -352,7 +352,9 @@ nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
 
-We can now check-in to the hotel
+If you get `[emerg] 3174#3174: "fastcgi_pass" directive is duplicate in /etc/nginx/sites-enabled/default:21`, make sure you only have 1 `fastcgi_pass` directive in the server block.
+
+We can now check into the hotel, we just need a browser that runs Shockwave.
 
 #### Shockwave browser
 
@@ -386,7 +388,7 @@ user@svr:/var/www/v14$ sudo apt install ufw -y
 user@svr:/var/www/v14$ sudo ufw enable # DO NOT DISCONNECT UNTIL YOU ALLOW PORT 22
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-user@svr:/var/www/v14$ sudo ufw allow 22,80,12322,12321,12309/tcp
+user@svr:/var/www/v14$ sudo ufw allow 22,80,12322,12321,12309/tcp # ssh, http, mus, server, rcon
 ```
 
 Check the `status` of `ufw`
@@ -404,7 +406,7 @@ To                         Action      From
 
 There are 3 files that need to be edited:
 - /opt/server/server/ini
-   - change `127.0.0.1` to your remote host's IP in `Server`, `Rcon` and `Mus`
+   - change `127.0.0.1` to your remote host's IP in `Server`, `Rcon` and `Mus`, **not** `Database`
 - /var/www/v14/index.php
    - change **every** instance of `localhost` to your remote host's IP
 - /var/www/v14/external_vars.txt
