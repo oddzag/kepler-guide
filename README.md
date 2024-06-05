@@ -170,7 +170,7 @@ In order to log into MariaDB to secure it, we'll need the current
 password for the root user. If you've just installed MariaDB, and
 haven't set the root password yet, you should just press enter here.
 
-Enter current password for root (enter for none):
+Enter current password for root (enter for none): # just press enter
 OK, successfully used password, moving on...
 
 Setting the root password or using the unix_socket ensures that nobody
@@ -242,7 +242,7 @@ Query OK, 0 rows affected (0.010 sec)
 MariaDB [(none)]> exit
 ```
 
-Exit the `mysql` prompt and then load/run the seed file. This will propagate the new database with the tables needed to run the server. It'll prompt you for the password of `mysql_user`@`localhost` on MariaDB, not your `sudo` user password. You can then see the contents of the database
+Exit and reopen the `mysql` prompt as your new user, then load/run the seed file. This will propagate the new database with the tables needed to run the server. It'll prompt you for the password of `mysql_user`@`localhost` on MariaDB, not your `sudo` user password. You can then see the contents of the database
 
 ```sh
 user@svr:/opt/server$ sudo mysql -u mysql_user -p -D keplerdb 
@@ -364,29 +364,30 @@ root@svr:/opt/server$ cd /var/www; sudo rm -R html
 
 root@svr:/var/www$ sudo wget -O dcrs.zip https://web.archive.org/web/20220724030154/https://raw.githubusercontent.com/Quackster/Kepler/master/tools/Quackster_v14.zip
 
-root@svr:/var/www/v14$ sudo unzip dcrs.zip
-root@svr:/var/www/v14$ sudo rm -R dcrs.zip
+root@svr:/var/www$ sudo unzip dcrs.zip
+root@svr:/var/www$ sudo rm -R dcrs.zip
 ```
 
 #### Edit server block and install `php`
 
-We need to set the [`server block`](http://nginx.org/en/docs/beginners_guide.html#conf_structure) to point http://localhost/ to that v14 folder. Specifically you need to change `root /var/www/html` to `root /var/www` and `index index.html index.htm index.nginx-debian.html;` to `index v14/index.php`. The `php` section also needs to be uncommented.
+We need to set the [`server block`](http://nginx.org/en/docs/beginners_guide.html#conf_structure) to point http://localhost/ to that v14 folder. Specifically you need to change `root /var/www/html` to `root /var/www` and `index index.html index.htm index.nginx-debian.html;` to `index v14/index.php`. We'll also need to uncomment the 'php' section and set our installed version.
 
-Start by deleting the `default` config. [Here's a copy](https://github.com/oddzag/kepler-guide/blob/main/nginx.default) if you need a reference.
+Start by deleting the `default` config [Here's a copy](https://github.com/oddzag/kepler-guide/blob/main/nginx.default) if you need a reference. Not sure if it 
 
 ```sh
-root@svr:/var/www/v14$ sudo rm -R /etc/nginx/sites-availale/default 
+root@svr:/var/www$ sudo rm -R /etc/nginx/sites-availale/default 
+root@svr:/var/www$ sudo rm -R /etc/nginx/sites-enabled/default
 ```
 
 Find your `php` version
 ```sh
-root@svr:/var/www/v14$ ls /etc/php
+root@svr:/var/www$ ls /etc/php
 8.2
 ```
 
 As you can see, I installed 8.2. Now, re-create the `default` config file to establish the server block. Set your `php` version in the `fastcgi_pass` directive. 
 ```sh
-root@svr:/var/www/v14$ sudo nano /etc/nginx/sites-available/default # recreate a blank copy
+root@svr:/var/www$ sudo nano /etc/nginx/sites-available/default # recreate a blank copy
 ```
 ```
 # copy and paste the following
@@ -414,8 +415,8 @@ server {
 Finally, restart `nginx` and test your config.
 
 ```sh
-root@svr:/var/www/v14$ sudo systemctl restart nginx
-root@svr:/var/www/v14$ sudo nginx -t
+root@svr:/var/www$ sudo systemctl restart nginx
+root@svr:/var/www$ sudo nginx -t
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 ```
@@ -452,16 +453,16 @@ Installing `ufw` is optional, but recommended if you're going to open your serve
 
 #### Install `ufw`
 ```sh
-user@svr:/var/www/v14$ sudo apt install ufw -y
-user@svr:/var/www/v14$ sudo ufw enable # DO NOT DISCONNECT UNTIL YOU ALLOW PORT 22
+user@svr:/var/www$ sudo apt install ufw -y
+user@svr:/var/www$ sudo ufw enable # DO NOT DISCONNECT UNTIL YOU ALLOW PORT 22
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-user@svr:/var/www/v14$ sudo ufw allow 22,80,12322,12321,12309/tcp # ssh, http, mus, server, rcon
+user@svr:/var/www$ sudo ufw allow 22,80,12322,12321,12309/tcp # ssh, http, mus, server, rcon
 ```
 
 Check the `status` of `ufw`
 ```sh
-user@svr:/var/www/v14$ sudo ufw status
+user@svr:/var/www$ sudo ufw status
 Status: active
 
 To                         Action      From
