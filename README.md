@@ -457,7 +457,7 @@ user@svr:/var/www$ sudo apt install ufw -y
 user@svr:/var/www$ sudo ufw enable # DO NOT DISCONNECT UNTIL YOU ALLOW PORT 22
 Command may disrupt existing ssh connections. Proceed with operation (y|n)? y
 Firewall is active and enabled on system startup
-user@svr:/var/www$ sudo ufw allow 22,80,12322,12321,12309/tcp # ssh, http, mus, server, rcon
+user@svr:/var/www$ sudo ufw allow 22,80,12322,12321/tcp # ssh, http, mus, server
 ```
 
 Check the `status` of `ufw`
@@ -467,15 +467,15 @@ Status: active
 
 To                         Action      From
 --                         ------      ----
-22,80,12309,12321,12322/tcp ALLOW       Anywhere
-22,80,12309,12321,12322/tcp (v6) ALLOW       Anywhere (v6)
+22,80,12309,12321/tcp      ALLOW       Anywhere
+22,80,12309,12321/tcp (v6) ALLOW       Anywhere (v6)
 ```
 
 #### Edit `server` and `loader` with remote host info
 
 There are 3 files that need to be edited:
 - /opt/server/server/ini
-   - change `127.0.0.1` to your remote host's IP in `Server`, `Rcon` and `Mus`, **not** `Database`
+   - change `127.0.0.1` to your remote host's IP in `Server` and `Mus`, **not** `Rcon` or `Database`
 - /var/www/v14/index.php
    - change **every** instance of `localhost` to your remote host's IP
 - /var/www/v14/external_vars.txt
