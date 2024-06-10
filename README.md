@@ -372,7 +372,7 @@ root@svr:/var/www$ sudo rm -R dcrs.zip
 
 We need to set the [`server block`](http://nginx.org/en/docs/beginners_guide.html#conf_structure) to point http://localhost/ to that v14 folder. Specifically you need to change `root /var/www/html` to `root /var/www` and `index index.html index.htm index.nginx-debian.html;` to `index v14/index.php`. We'll also need to uncomment the 'php' section and set our installed version.
 
-Start by deleting the `default` config [Here's a copy](https://github.com/oddzag/kepler-guide/blob/main/nginx.default) if you need a reference. Not sure if it 
+Start by deleting the `default` config [Here's a copy](https://github.com/oddzag/kepler-guide/blob/main/nginx.default) if you need a reference.
 
 ```sh
 root@svr:/var/www$ sudo rm -R /etc/nginx/sites-availale/default 
